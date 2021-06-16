@@ -8,12 +8,13 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import au.com.bytecode.opencsv.CSVWriter;
+//import au.com.bytecode.opencsv.CSVWriter;
 
 public class safeEntryimpl
 	extends java.rmi.server.UnicastRemoteObject implements safeEntry{
@@ -22,45 +23,7 @@ public class safeEntryimpl
         throws java.rmi.RemoteException {
         super();
     }
-
-    public long add(long a, long b)
-        throws java.rmi.RemoteException {
-    	return a +b;
-    }
-
-    public long sub(long a, long b)
-        throws java.rmi.RemoteException {
-    	return a-b;
-    }
-
-    public long mul(long a, long b)
-        throws java.rmi.RemoteException {
-    	return a*b;
-    }
-
-    public long div(long a, long b)
-        throws java.rmi.RemoteException {
-    	return a/b;
-    }
-
-    public long pow(long a, int b)
-    		throws java.rmi.RemoteException {
-    		if (b==0)
-    			return 1;
-    		else 
-    			return a*pow(a,b-1);
-	  }
-    
-	private String name;
-	private safeEntryclient ui;	
-	public safeEntryimpl (String n) throws RemoteException {
-		name=n;
-		}
 	
-	public void tell(String st) throws RemoteException{
-		System.out.println(st);
-		//ui.writeMsg(st);
-	}
 	   public void getinfo(String namestr,String nricstr, String locationstr, String status) {
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now(); 
@@ -69,28 +32,20 @@ public class safeEntryimpl
 		   System.out.print("\n"+namestr+nricstr+locationstr+status+now.format(dtf).toString());
  
 		    FileWriter pw;
-		    Path path = Paths.get("C:\\Users\\Hana\\eclipse-workspace\\CD_Lab_Assignment\\src\\database.csv");
+		    Path path = Paths.get("database.csv");
 		    if (Files.exists(path)) {
 	    	try {
-	    		/*
-	    		BufferedWriter out = null;
-	    	    FileWriter fstream = new FileWriter("database.csv", true); //true tells to append data.
-	    	    out = new BufferedWriter(fstream);
-	    	    out.write(Arrays.toString(dataLines));
-	    	    */
-	    		CSVWriter writer = new CSVWriter(new FileWriter("database.csv", true));
-	    		
-	    		writer.writeNext(namestr);
-	    		writer.writeNext(",");
-	    		writer.writeNext(nricstr);
-	    		writer.writeNext(",");
-	    		writer.writeNext(locationstr);
-	    		writer.writeNext(",");
-	    		writer.writeNext(status);
-	    		writer.writeNext(",");
-				pw.append(now.format(dtf).toString());
-	    		writer.flush();
-	    		writer.close();
+	    		Files.write(path, "\n".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, namestr.getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, nricstr.getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, locationstr.getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, status.getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, now.format(dtf).toString().getBytes(), StandardOpenOption.APPEND);
+
 	    	}
 	    	catch (IOException e) {
 	    	    System.err.println("Error: " + e.getMessage());
@@ -98,7 +53,8 @@ public class safeEntryimpl
 		    }
 		    else {
 				try {
-					pw = new FileWriter("database.csv");
+					File f = new File("C:\\Users\\Hana\\eclipse-workspace\\CD_Lab_Assignment\\src\\database.csv");
+					pw = new FileWriter("database.csv",true);
 					pw.append("Name");
 					pw.append(",");
 					pw.append("NRIC");
@@ -122,13 +78,22 @@ public class safeEntryimpl
 					pw.flush();
 					pw.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		    }
 	   }
-	
-	public void setGUI(safeEntryclient t){ 
-		ui=t ; 
-	} 	
+	   
+	   public void retrievedata() {
+		   //ask if moh anot if yes do below
+		   	//retrieve data from file based on location & time of sign in&out
+		   	//notify users
+		   	//notify based on nric (not sure how)
+		   //ifnot ask for nric and retrieve data based on that (will show if have been notified to stayquarintined)
+	   }
+	   
+	   public void groupsignin() {
+		   //do grp sign in?
+	   }
+	   
+
 }

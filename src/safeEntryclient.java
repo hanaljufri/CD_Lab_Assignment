@@ -99,11 +99,11 @@ public class safeEntryclient {
 	    top.add(new JLabel("Location:"));top.add(locationlist);
         bottom.add(signin);
         bottom.add(signout);
-        cn.add(textarea);
+        //cn.add(textarea);
    
 	    main.add(top, BorderLayout.NORTH); 
 	    main.add(bottom, BorderLayout.SOUTH);
-	    main.add(cn,BorderLayout.CENTER);
+	    //main.add(cn,BorderLayout.CENTER);
 	    main.setBorder(new EmptyBorder(10, 10, 10, 10) );
 	    
 	    //Events
@@ -127,15 +127,13 @@ public class safeEntryclient {
 					  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
 				  }
 				  else {
-					  JOptionPane.showMessageDialog(null,namestr+nricstr+locationstr+status);
-				  String success = new String("Success"); 
 					try {
 						server.getinfo(namestr, nricstr, locationstr, status);
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				  textarea.append(success);	    
+					JOptionPane.showMessageDialog(null,"Successful Sign Out!"); 
 				  } 
 				}});
 	    signout.addActionListener(new ActionListener(){
@@ -158,9 +156,13 @@ public class safeEntryclient {
 					  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
 				  }
 				  else {
-					  JOptionPane.showMessageDialog(null,namestr+nricstr+locationstr+status);
-				  String success = new String("Success"); 
-				  textarea.append(success);	    
+					 try {
+						server.getinfo(namestr, nricstr, locationstr, status);
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					  JOptionPane.showMessageDialog(null,"Successful Sign Out!");  
 				  } 
 	      }  });
 	    
