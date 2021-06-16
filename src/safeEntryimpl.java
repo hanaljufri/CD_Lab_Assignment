@@ -27,7 +27,6 @@ public class safeEntryimpl
 	   public void getinfo(String namestr,String nricstr, String locationstr, String status) {
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now(); 
-		   //String[] dataLines = new String[] {namestr, nricstr, locationstr, status, now.format(dtf).toString()};
 
 		   System.out.print("\n"+namestr+nricstr+locationstr+status+now.format(dtf).toString());
  
