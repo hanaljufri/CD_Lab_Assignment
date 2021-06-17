@@ -28,9 +28,6 @@ import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;	//Import the MalformedURLException class so you can catch it
 import java.rmi.NotBoundException;	//Import the NotBoundException class so you can catch it
 
-import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.TimePicker;
-
 
 public class safeEntryclient {
 
@@ -374,7 +371,7 @@ public class safeEntryclient {
 		  top.add(new JLabel("To Time:"));top.add(totime);
 		  top.add(new JLabel("Location:"));top.add(locationlist);
 		  
-		  buttons.setLayout(new BorderLayout(5,5));
+		  buttons.setLayout(new GridLayout(0,2));
 		  buttons.add(check);
 		  
 		  check.addActionListener(new ActionListener(){
@@ -400,17 +397,16 @@ public class safeEntryclient {
 				} else if (!matchFound2 || !matchFound4) {
 					JOptionPane.showMessageDialog(null,"Please enter time in HH:MM format using 24 hour clock");
 				}else {
-					buttons.add(notify);
-				  /*try {
+				  try {
 					server.retrievedataMOH(fromdateinput, fromtimeinput, todateinput, totimeinput, locationstr);
-					
+					buttons.add(check);
+					buttons.add(notify);
+					buttons.validate();
 				  } catch (RemoteException e1) {
-					//e1.printStackTrace();
-					 */
+					e1.printStackTrace();
 				} 
-				}
-			  }    
-		  });
+				}}
+			  });
 		  
 		  notify.addActionListener(new ActionListener(){
 			  public void actionPerformed(ActionEvent e){
@@ -419,12 +415,12 @@ public class safeEntryclient {
 					String fromtimeinput = fromtime.getText();
 					String todateinput = todate.getText();
 					String totimeinput = totime.getText();
-					//try {
-						//server.notifynric(fromdateinput, fromtimeinput, todateinput, totimeinput, locationstr);
-					//} catch (RemoteException e1) {
-						//e1.printStackTrace();
-					}
-			  }});
+					try {
+						server.notifynric(fromdateinput, fromtimeinput, todateinput, totimeinput, locationstr);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}}
+			  });
 		  
 		  main.add(top, BorderLayout.NORTH);
 		  main.add(buttons);
