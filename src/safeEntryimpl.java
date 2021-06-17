@@ -23,6 +23,10 @@ public class safeEntryimpl
         throws java.rmi.RemoteException {
         super();
     }
+    
+    //current errors:
+    	//saving data of all 5 check ins when there were only 2
+    	//
 	
 	   public void getinfo(String namestr,String nricstr, String locationstr, String status) {
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
@@ -42,7 +46,8 @@ public class safeEntryimpl
 	    		Files.write(path, status.getBytes(), StandardOpenOption.APPEND);
 	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
 	    		Files.write(path, now.format(dtf).toString().getBytes(), StandardOpenOption.APPEND);
-
+	    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+	    		Files.write(path, "N".getBytes(), StandardOpenOption.APPEND);
 	    	}
 	    	catch (IOException e) {
 	    	    System.err.println("Error: " + e.getMessage());
@@ -62,6 +67,8 @@ public class safeEntryimpl
 					pw.append(",");
 					pw.append("Date & Time");
 					pw.append(",");
+					pw.append("In Risk?");
+					pw.append(",");
 					pw.append("\n");
 					pw.append(namestr);
 					pw.append(",");
@@ -72,6 +79,8 @@ public class safeEntryimpl
 					pw.append(status);
 					pw.append(",");
 					pw.append(now.format(dtf).toString());
+					pw.append(",");
+					pw.append("N");
 					pw.flush();
 					pw.close();
 				} catch (IOException e) {
@@ -80,12 +89,16 @@ public class safeEntryimpl
 		    }
 	   }
 	   
-	   public void retrievedataMOH() {
-		   //ask if moh anot if yes do below
+	   public void retrievedataMOH(String fromdateinput, String fromtimeinput, String todateinput,String totimeinput,String locationstr) {
+		   
 		   	//retrieve data from file based on location & time of sign in&out
 		   	//notify users
 		   	//notify based on nric (not sure how)
 		   //ifnot ask for nric and retrieve data based on that (will show if have been notified to stayquarintined)
+	   }
+	   
+	   public void notifynric(String fromdateinput, String fromtimeinput, String todateinput,String totimeinput,String locationstr) {
+		   
 	   }
 	   
 	   public void retrievedataNRIC() {
@@ -101,11 +114,12 @@ public class safeEntryimpl
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now(); 
 		   //int r = 0;
+		   outerloop:
 		   for (int r=0; r<names.length; r++) {
 			   //return null to remove?
 			  if (names[r].equals(null) || names[r].equals("") ) {
-				break;  
-			  }
+				break outerloop;  
+			  } 
 			  else {
 				   FileWriter pw;
 				    Path path = Paths.get("database.csv");
@@ -121,6 +135,8 @@ public class safeEntryimpl
 			    		Files.write(path, status.getBytes(), StandardOpenOption.APPEND);
 			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
 			    		Files.write(path, now.format(dtf).toString().getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, "N".getBytes(), StandardOpenOption.APPEND);
 
 			    	}
 			    	catch (IOException e) {
@@ -141,6 +157,8 @@ public class safeEntryimpl
 							pw.append(",");
 							pw.append("Date & Time");
 							pw.append(",");
+							pw.append("In Risk?");
+							pw.append(",");
 							pw.append("\n");
 							pw.append(names[r]);
 							pw.append(",");
@@ -151,6 +169,8 @@ public class safeEntryimpl
 							pw.append(status);
 							pw.append(",");
 							pw.append(now.format(dtf).toString());
+							pw.append(",");
+							pw.append("N");
 							pw.flush();
 							pw.close();
 						} catch (IOException e) {

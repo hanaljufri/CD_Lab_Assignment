@@ -28,6 +28,10 @@ import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;	//Import the MalformedURLException class so you can catch it
 import java.rmi.NotBoundException;	//Import the NotBoundException class so you can catch it
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.TimePicker;
+
+
 public class safeEntryclient {
 
 	private safeEntry server;
@@ -143,9 +147,9 @@ public class safeEntryclient {
 	    frame.setSize(400,220);
 	    frame.setVisible(true);  
 	  }
-	  JTextField name, nric, location;
+	  JTextField name, nric, location, fromdate, fromtime, todate, totime;
 	  JTextArea textarea;
-	  JButton checkin, checkout, myrecords, allrecords, indiv, group;
+	  JButton checkin, checkout, myrecords, allrecords, indiv, group, check, notify;
 	  JFrame frame;
 	    
 	  //individual sign-in & sign-out page
@@ -253,7 +257,7 @@ public class safeEntryclient {
 		    checkout=new JButton("Check Out");
 		    checkin.setPreferredSize(new Dimension(200,50));
 		    checkout.setPreferredSize(new Dimension(200,50));
-		    location = new JTextField();
+		    
 		    JTextField nric1=new JTextField();
 		    JTextField name1=new JTextField();
 		    JTextField nric2=new JTextField();
@@ -348,6 +352,86 @@ public class safeEntryclient {
 	  //allrecords page
 	  public void openallrecords() {
 		  
+		  frame=new JFrame("Group Safe Entry");
+		  JPanel main =new JPanel();
+		  JPanel top =new JPanel(); //welcome info
+		  JPanel buttons = new JPanel();
+		  
+		  check=new JButton("Find");
+		  check.setPreferredSize(new Dimension(200,50));
+		  notify = new JButton("Notify on Quarintine");
+	      fromdate = new JTextField();
+	      fromtime = new JTextField();
+	      todate = new JTextField();
+	      totime = new JTextField();
+	      String[] locations = { "Bedok Mall", "Tampines One", "NEX", "Vivo City", "Mustafa Centre", "ION Orchard","Scape", "Bugis Junction" };        
+		  JComboBox locationlist = new JComboBox(locations);
+		  
+		  top.setLayout(new GridLayout(0,4)); 
+		  top.add(new JLabel("From Date"));top.add(fromdate);    
+		  top.add(new JLabel("From Time:"));top.add(fromtime);
+		  top.add(new JLabel("To Date"));top.add(todate);    
+		  top.add(new JLabel("To Time:"));top.add(totime);
+		  top.add(new JLabel("Location:"));top.add(locationlist);
+		  
+		  buttons.setLayout(new BorderLayout(5,5));
+		  buttons.add(check);
+		  
+		  check.addActionListener(new ActionListener(){
+			  public void actionPerformed(ActionEvent e){
+				Pattern datepattern = Pattern.compile("[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{4}",Pattern.CASE_INSENSITIVE);
+				Pattern timepattern = Pattern.compile("[0-9]{2}[:]{1}[0-9]{2}",Pattern.CASE_INSENSITIVE);
+				String locationstr= (String) locationlist.getSelectedItem();
+				String fromdateinput = fromdate.getText();
+				String fromtimeinput = fromtime.getText();
+				String todateinput = todate.getText();
+				String totimeinput = totime.getText();
+				Matcher matcher1 = datepattern.matcher(fromdateinput);
+				Matcher matcher2 = timepattern.matcher(fromtimeinput);
+				Matcher matcher3 = datepattern.matcher(todateinput);
+				Matcher matcher4 = timepattern.matcher(totimeinput);
+				boolean matchFound1 = matcher1.find();
+				boolean matchFound2 = matcher2.find();
+				boolean matchFound3 = matcher3.find();
+				boolean matchFound4 = matcher4.find();
+				
+				if (!matchFound1 || !matchFound3) {
+					JOptionPane.showMessageDialog(null,"Please enter date in DD/MM/YYYY format");
+				} else if (!matchFound2 || !matchFound4) {
+					JOptionPane.showMessageDialog(null,"Please enter time in HH:MM format using 24 hour clock");
+				}else {
+					buttons.add(notify);
+				  /*try {
+					server.retrievedataMOH(fromdateinput, fromtimeinput, todateinput, totimeinput, locationstr);
+					
+				  } catch (RemoteException e1) {
+					//e1.printStackTrace();
+					 */
+				} 
+				}
+			  }    
+		  });
+		  
+		  notify.addActionListener(new ActionListener(){
+			  public void actionPerformed(ActionEvent e){
+				  String locationstr= (String) locationlist.getSelectedItem();
+					String fromdateinput = fromdate.getText();
+					String fromtimeinput = fromtime.getText();
+					String todateinput = todate.getText();
+					String totimeinput = totime.getText();
+					//try {
+						//server.notifynric(fromdateinput, fromtimeinput, todateinput, totimeinput, locationstr);
+					//} catch (RemoteException e1) {
+						//e1.printStackTrace();
+					}
+			  }});
+		  
+		  main.add(top, BorderLayout.NORTH);
+		  main.add(buttons);
+		  frame.setContentPane(main);
+		  frame.setSize(500,300);
+		  frame.setVisible(true);
+	      
 	  }
 	      
 	  //myrecord page

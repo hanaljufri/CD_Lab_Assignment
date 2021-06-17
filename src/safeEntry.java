@@ -11,4 +11,7 @@ public interface safeEntry
 
 	public void groupcheckin(String[] names, String nrics[], String location, String status)throws RemoteException;
 
+	public void retrievedataMOH(String fromdateinput, String fromtimeinput, String todateinput,String totimeinput,String locationstr) throws RemoteException;
+
+	public void notifynric(String fromdateinput, String fromtimeinput, String todateinput,String totimeinput,String locationstr) throws RemoteException;
 }
