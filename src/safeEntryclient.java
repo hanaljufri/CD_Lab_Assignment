@@ -145,7 +145,7 @@ public class safeEntryclient {
 	  }
 	  JTextField name, nric, location;
 	  JTextArea textarea;
-	  JButton signin, signout, myrecords, allrecords, indiv, group;
+	  JButton checkin, checkout, myrecords, allrecords, indiv, group;
 	  JFrame frame;
 	    
 	  //individual sign-in & sign-out page
@@ -155,10 +155,10 @@ public class safeEntryclient {
 		    JPanel main =new JPanel();
 		    JPanel buttons = new JPanel();
 		    
-		    signin=new JButton("Sign In");
-		    signout=new JButton("Sign Out");
-		    signin.setPreferredSize(new Dimension(200,50));
-		    signout.setPreferredSize(new Dimension(200,50));
+		    checkin=new JButton("Check In");
+		    checkout=new JButton("Check Out");
+		    checkin.setPreferredSize(new Dimension(200,50));
+		    checkout.setPreferredSize(new Dimension(200,50));
 		    location = new JTextField();
 		    nric=new JTextField();
 		    name=new JTextField();
@@ -170,14 +170,14 @@ public class safeEntryclient {
 		    top.add(new JLabel("NRIC:"));top.add(nric);
 		    top.add(new JLabel("Location:"));top.add(locationlist);
 		    
-		    buttons.add(signin, BorderLayout.EAST);
-		    buttons.add(signout, BorderLayout.WEST);
+		    buttons.add(checkin, BorderLayout.EAST);
+		    buttons.add(checkout, BorderLayout.WEST);
 		    
 		    main.add(top, BorderLayout.NORTH); 
 		    main.add(buttons);
 		    
 		    //Events
-		    signin.addActionListener(new ActionListener(){
+		    checkin.addActionListener(new ActionListener(){
 			      public void actionPerformed(ActionEvent e){ 
 			    	  
 			    	  String namestr = name.getText();
@@ -186,7 +186,7 @@ public class safeEntryclient {
 					    Matcher matcher = nricpattern.matcher(nricstr);
 					    boolean matchFound = matcher.find();
 					    String locationstr = (String) locationlist.getSelectedItem();
-					    String status = "Sign in";
+					    String status = "Check in";
 					    
 						if (namestr.contentEquals("")) {
 							JOptionPane.showMessageDialog(null,"Please enter name");
@@ -206,7 +206,7 @@ public class safeEntryclient {
 							JOptionPane.showMessageDialog(null,"Successful Sign In!"); 
 						  } 
 						}});
-			signout.addActionListener(new ActionListener(){
+			checkout.addActionListener(new ActionListener(){
 			      public void actionPerformed(ActionEvent e){
 			    	  String namestr = name.getText();
 			    	  String nricstr = nric.getText();
@@ -214,7 +214,7 @@ public class safeEntryclient {
 					    Matcher matcher = nricpattern.matcher(nricstr);
 					    boolean matchFound = matcher.find();
 					    String locationstr = (String) locationlist.getSelectedItem();
-					    String status = "Sign out";
+					    String status = "Check out";
 					    
 						if (namestr.contentEquals("")) {
 							JOptionPane.showMessageDialog(null,"Please enter name");
@@ -243,9 +243,107 @@ public class safeEntryclient {
 	    
 	  //group sign-in & sign-out page
 	  public void group_safeEntry() {
+		  
 		  frame=new JFrame("Group Safe Entry");
 		  JPanel main =new JPanel();
+		    JPanel top =new JPanel(); //welcome info
+		    JPanel buttons = new JPanel();
 		    
+		    checkin=new JButton("Check In");
+		    checkout=new JButton("Check Out");
+		    checkin.setPreferredSize(new Dimension(200,50));
+		    checkout.setPreferredSize(new Dimension(200,50));
+		    location = new JTextField();
+		    JTextField nric1=new JTextField();
+		    JTextField name1=new JTextField();
+		    JTextField nric2=new JTextField();
+		    JTextField name2=new JTextField();
+		    JTextField nric3=new JTextField();
+		    JTextField name3=new JTextField();
+		    JTextField nric4=new JTextField();
+		    JTextField name4=new JTextField();
+		    JTextField nric5=new JTextField();
+		    JTextField name5=new JTextField();
+		    String[] locations = { "Bedok Mall", "Tampines One", "NEX", "Vivo City", "Mustafa Centre", "ION Orchard","Scape", "Bugis Junction" };        
+		    JComboBox locationlist = new JComboBox(locations);
+		    
+		    top.setLayout(new GridLayout(0,4)); 
+		    top.add(new JLabel("Name:"));top.add(name1);    
+		    top.add(new JLabel("NRIC:"));top.add(nric1);
+		    top.add(new JLabel("Name:"));top.add(name2);    
+		    top.add(new JLabel("NRIC:"));top.add(nric2);
+		    top.add(new JLabel("Name:"));top.add(name3);    
+		    top.add(new JLabel("NRIC:"));top.add(nric3);
+		    top.add(new JLabel("Name:"));top.add(name4);    
+		    top.add(new JLabel("NRIC:"));top.add(nric4);
+		    top.add(new JLabel("Name:"));top.add(name5);    
+		    top.add(new JLabel("NRIC:"));top.add(nric5);
+		    top.add(new JLabel("Location:"));top.add(locationlist);
+		    
+		    buttons.add(checkin, BorderLayout.EAST);
+		    buttons.add(checkout, BorderLayout.WEST);
+		    
+		    main.add(top, BorderLayout.NORTH); 
+		    main.add(buttons);
+
+		  checkin.addActionListener(new ActionListener(){
+		      public void actionPerformed(ActionEvent e){ 
+		    	  		  String[] names = {name1.toString(),name2.toString(),name3.toString(),name4.toString(),name5.toString()};
+		  String[] nrics = {nric1.toString(),nric2.toString(),nric3.toString(),nric4.toString(),nric5.toString()};
+					Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
+					int r=0;
+				    String locationstr= (String) locationlist.getSelectedItem();
+				    String status = "Check in";
+					for (String i:nrics) {
+						Matcher matcher = nricpattern.matcher(nrics[r]);
+						boolean matchFound = matcher.find();
+					if (names[0].contentEquals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter at least 1 name");
+					  }
+					  else if (nrics[0].contentEquals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter at least 1 nric");
+					  }
+					  else if (!matchFound) {
+						  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
+					  }
+					  else {
+						try {
+							server.groupcheckin(names, nrics, locationstr, status);
+						} catch (RemoteException e1) {
+							e1.printStackTrace();
+						}
+						JOptionPane.showMessageDialog(null,"Successful Sign Out!"); 
+					  } }
+					}});
+		checkout.addActionListener(new ActionListener(){
+		      public void actionPerformed(ActionEvent e){
+		    	  String namestr = name.getText();
+		    	  String nricstr = nric.getText();
+					Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
+				    Matcher matcher = nricpattern.matcher(nricstr);
+				    boolean matchFound = matcher.find();
+				    String locationstr = (String) locationlist.getSelectedItem();
+				    String status = "Check out";
+				    
+					if (namestr.contentEquals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter name");
+					  }
+					  else if (nricstr.contentEquals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter nric");
+					  }
+					  else if (!matchFound) {
+						  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
+					  }
+					  else {/*
+						 try {
+							 server.groupcheckin(names, nrics, location, status);
+						} catch (RemoteException e1) {
+							e1.printStackTrace();
+						}
+						  JOptionPane.showMessageDialog(null,"Successful Sign Out!"); */ 
+					  } 
+					 
+		      }  });
 		  
 		  frame.setContentPane(main);
 		  frame.setVisible(true);  

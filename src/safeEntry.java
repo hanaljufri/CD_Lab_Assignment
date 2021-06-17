@@ -9,4 +9,6 @@ public interface safeEntry
 
 	public void getinfo(String namestr, String nricstr, String locationstr, String status)throws RemoteException ;
 
+	public void groupcheckin(String[] names, String nrics[], String location, String status)throws RemoteException;
+
 }

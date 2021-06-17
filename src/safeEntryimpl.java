@@ -27,8 +27,6 @@ public class safeEntryimpl
 	   public void getinfo(String namestr,String nricstr, String locationstr, String status) {
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now(); 
-
-		   System.out.print("\n"+namestr+nricstr+locationstr+status+now.format(dtf).toString());
  
 		    FileWriter pw;
 		    Path path = Paths.get("database.csv");
@@ -98,9 +96,68 @@ public class safeEntryimpl
 		   //ifnot ask for nric and retrieve data based on that (will show if have been notified to stayquarintined)
 	   }
 	   
-	   public void groupsignin() {
+	   public void groupcheckin(String[] names, String nrics[], String location, String status) {
 		   //do grp sign in?
-	   }
-	   
+		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now(); 
+		   int r = 0;
+		   for (String i : names) {
+			   
+			   if (i=="") {
+				   break;
+			   }else {
+				   FileWriter pw;
+				    Path path = Paths.get("database.csv");
+				    if (Files.exists(path)) {
+			    	try {
+			    		Files.write(path, "\n".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, names[r].getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, nrics[r].getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, location.getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, status.getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, ",".getBytes(), StandardOpenOption.APPEND);
+			    		Files.write(path, now.format(dtf).toString().getBytes(), StandardOpenOption.APPEND);
 
+			    	}
+			    	catch (IOException e) {
+			    	    System.err.println("Error: " + e.getMessage());
+			    	}
+				    }
+				    else {
+						try {
+							File f = new File("C:\\Users\\Hana\\eclipse-workspace\\CD_Lab_Assignment\\src\\database.csv");
+							pw = new FileWriter("database.csv",true);
+							pw.append("Name");
+							pw.append(",");
+							pw.append("NRIC");
+							pw.append(",");
+							pw.append("Location");
+							pw.append(",");
+							pw.append("Status");
+							pw.append(",");
+							pw.append("Date & Time");
+							pw.append(",");
+							pw.append("\n");
+							pw.append(names[r]);
+							pw.append(",");
+							pw.append(nrics[r]);
+							pw.append(",");
+							pw.append(location);
+							pw.append(",");
+							pw.append(status);
+							pw.append(",");
+							pw.append(now.format(dtf).toString());
+							pw.flush();
+							pw.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				    }
+			   }
+			   r++;
+		   }
+	   }
 }
