@@ -100,12 +100,13 @@ public class safeEntryimpl
 		   //do grp sign in?
 		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");  
 		   LocalDateTime now = LocalDateTime.now(); 
-		   int r = 0;
-		   for (String i : names) {
-			   
-			   if (i=="") {
-				   break;
-			   }else {
+		   //int r = 0;
+		   for (int r=0; r<names.length; r++) {
+			   //return null to remove?
+			  if (names[r].equals(null) || names[r].equals("") ) {
+				break;  
+			  }
+			  else {
 				   FileWriter pw;
 				    Path path = Paths.get("database.csv");
 				    if (Files.exists(path)) {
@@ -157,7 +158,6 @@ public class safeEntryimpl
 						}
 				    }
 			   }
-			   r++;
 		   }
 	   }
 }

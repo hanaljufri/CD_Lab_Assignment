@@ -288,66 +288,61 @@ public class safeEntryclient {
 
 		  checkin.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e){ 
-		    	  		  String[] names = {name1.toString(),name2.toString(),name3.toString(),name4.toString(),name5.toString()};
-		  String[] nrics = {nric1.toString(),nric2.toString(),nric3.toString(),nric4.toString(),nric5.toString()};
-					Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
-					int r=0;
-				    String locationstr= (String) locationlist.getSelectedItem();
-				    String status = "Check in";
-					for (String i:nrics) {
-						Matcher matcher = nricpattern.matcher(nrics[r]);
-						boolean matchFound = matcher.find();
-					if (names[0].contentEquals("")) {
+		    	String[] names = {name1.getText(),name2.getText(),name3.getText(),name4.getText(),name5.getText()};
+		    	String[] nrics = {nric1.getText(),nric2.getText(),nric3.getText(),nric4.getText(),nric5.getText()};
+		    	Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
+				int r=0;
+				String locationstr= (String) locationlist.getSelectedItem();
+				String status = "Check in";
+				Matcher matcher = nricpattern.matcher(nrics[0]);
+				boolean matchFound = matcher.find();
+				//check info if first name exists + first nric is correct, call function
+				
+				if (name1.getText().contentEquals("")) {
+					JOptionPane.showMessageDialog(null,"Please enter at least 1 name");
+				}else if (nric1.getText().contentEquals("")) {
+					JOptionPane.showMessageDialog(null,"Please enter at least 1 NRIC");
+				}else if (!matchFound) {
+					JOptionPane.showMessageDialog(null,"Please enter valid NRIC");
+				}else {
+					try {
+						server.groupcheckin(names, nrics, locationstr, status);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null,"Successful Check In!"); 
+				  }
+				//there needs to be a for loop somewhere here idk where
+					}});
+		checkout.addActionListener(new ActionListener(){
+		      public void actionPerformed(ActionEvent e){
+		    	  String[] names = {name1.getText(),name2.getText(),name3.getText(),name4.getText(),name5.getText()};
+			    	String[] nrics = {nric1.getText(),nric2.getText(),nric3.getText(),nric4.getText(),nric5.getText()};
+			    	Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
+					String locationstr= (String) locationlist.getSelectedItem();
+					String status = "Check out";
+					Matcher matcher = nricpattern.matcher(nrics[0]);
+					boolean matchFound = matcher.find();
+					
+					//check info if first name exists + first nric is correct, call function
+					if (name1.getText().contentEquals("")) {
 						JOptionPane.showMessageDialog(null,"Please enter at least 1 name");
-					  }
-					  else if (nrics[0].contentEquals("")) {
-						JOptionPane.showMessageDialog(null,"Please enter at least 1 nric");
-					  }
-					  else if (!matchFound) {
-						  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
-					  }
-					  else {
+					}else if (nric1.getText().contentEquals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter at least 1 NRIC");
+					}else if (!matchFound) {
+						JOptionPane.showMessageDialog(null,"Please enter valid NRIC");
+					}else {
 						try {
 							server.groupcheckin(names, nrics, locationstr, status);
 						} catch (RemoteException e1) {
 							e1.printStackTrace();
 						}
-						JOptionPane.showMessageDialog(null,"Successful Sign Out!"); 
-					  } }
-					}});
-		checkout.addActionListener(new ActionListener(){
-		      public void actionPerformed(ActionEvent e){
-		    	  String namestr = name.getText();
-		    	  String nricstr = nric.getText();
-					Pattern nricpattern = Pattern.compile("[STFG]{1}[0-9]{7}[a-z]{1}",Pattern.CASE_INSENSITIVE);
-				    Matcher matcher = nricpattern.matcher(nricstr);
-				    boolean matchFound = matcher.find();
-				    String locationstr = (String) locationlist.getSelectedItem();
-				    String status = "Check out";
-				    
-					if (namestr.contentEquals("")) {
-						JOptionPane.showMessageDialog(null,"Please enter name");
+						JOptionPane.showMessageDialog(null,"Successful Check Out!"); 
 					  }
-					  else if (nricstr.contentEquals("")) {
-						JOptionPane.showMessageDialog(null,"Please enter nric");
-					  }
-					  else if (!matchFound) {
-						  JOptionPane.showMessageDialog(null,"Please enter a valid nric");
-					  }
-					  else {/*
-						 try {
-							 server.groupcheckin(names, nrics, location, status);
-						} catch (RemoteException e1) {
-							e1.printStackTrace();
-						}
-						  JOptionPane.showMessageDialog(null,"Successful Sign Out!"); */ 
-					  } 
-					 
 		      }  });
-		  
 		  frame.setContentPane(main);
+		  frame.setSize(500,300);
 		  frame.setVisible(true);  
-		    
 	  }
 	      
 	  //allrecords page
