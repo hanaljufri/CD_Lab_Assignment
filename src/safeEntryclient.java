@@ -245,19 +245,10 @@ public class safeEntryclient {
 	  public void group_safeEntry() {
 		  frame=new JFrame("Group Safe Entry");
 		  JPanel main =new JPanel();
-		  
-		  JRadioButton five = new JRadioButton("five");
-		    five.setMnemonic(KeyEvent.VK_B);
-		    five.setSelected(true);
-		    five.setActionCommand();
-
-		    JRadioButton ten = new JRadioButton("ten");
-		    ten.setMnemonic(KeyEvent.VK_C);
 		    
-		    main.add(five);
-		    main.add(ten);
-		    frame.setContentPane(main);
-		    frame.setVisible(true);  
+		  
+		  frame.setContentPane(main);
+		  frame.setVisible(true);  
 		    
 	  }
 	      
