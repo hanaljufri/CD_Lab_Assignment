@@ -82,7 +82,15 @@ public class safeEntryimpl
 		    }
 	   }
 	   
-	   public void retrievedata() {
+	   public void retrievedataMOH() {
+		   //ask if moh anot if yes do below
+		   	//retrieve data from file based on location & time of sign in&out
+		   	//notify users
+		   	//notify based on nric (not sure how)
+		   //ifnot ask for nric and retrieve data based on that (will show if have been notified to stayquarintined)
+	   }
+	   
+	   public void retrievedataNRIC() {
 		   //ask if moh anot if yes do below
 		   	//retrieve data from file based on location & time of sign in&out
 		   	//notify users
