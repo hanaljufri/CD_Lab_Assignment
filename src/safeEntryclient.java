@@ -76,11 +76,11 @@ public class safeEntryclient {
 		JPanel buttons = new JPanel();
 
 		// welcome panel
-		JTextArea welcome = new JTextArea("Welcome to SafeEntry!");
-		JTextArea instructions = new JTextArea("Instructions (to add)");
+		JLabel welcome = new JLabel("Welcome to SafeEntry!");
 		welcomepanel.setLayout(new BorderLayout(5, 5));
 		welcomepanel.add(welcome, BorderLayout.NORTH);
-		welcomepanel.add(instructions, BorderLayout.SOUTH);
+		
+		
 
 		// Sign up buttons
 		indiv = new JButton("Individual Safe Entry");
