@@ -80,7 +80,6 @@ public class safeEntryclient {
 		welcomepanel.setLayout(new BorderLayout(5, 5));
 		welcomepanel.add(welcome, BorderLayout.NORTH);
 		
-		
 
 		// Sign up buttons
 		indiv = new JButton("Individual Safe Entry");
@@ -136,7 +135,7 @@ public class safeEntryclient {
 		});
 
 		frame.setContentPane(main);
-		frame.setSize(400, 220);
+		frame.setSize(500, 220);
 		frame.setVisible(true);
 	}
 
@@ -201,7 +200,7 @@ public class safeEntryclient {
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(null, "Successful Sign In!");
+					JOptionPane.showMessageDialog(null, "Successful Check In!");
 				}
 			}
 		});
@@ -227,14 +226,14 @@ public class safeEntryclient {
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(null, "Successful Sign Out!");
+					JOptionPane.showMessageDialog(null, "Successful Check Out!");
 				}
 
 			}
 		});
 
 		frame.setContentPane(main);
-		frame.setSize(400, 220);
+		frame.setSize(500, 220);
 		frame.setVisible(true);
 	}
 
