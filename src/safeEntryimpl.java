@@ -29,10 +29,6 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 		super();
 	}
 
-	// current errors:
-	// saving data of all 5 check ins when there were only 2
-	//
-
 	public void getinfo(String namestr, String nricstr, String locationstr, String status) {
 		DateTimeFormatter dtfdate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		DateTimeFormatter dtftime = DateTimeFormatter.ofPattern("HH:mm");
@@ -72,7 +68,9 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 				pw.append(",");
 				pw.append("Status");
 				pw.append(",");
-				pw.append("Date & Time");
+				pw.append("Date");
+				pw.append(",");
+				pw.append("Time");
 				pw.append(",");
 				pw.append("In Risk?");
 				pw.append(",");
@@ -100,7 +98,6 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 
 	public void retrievedataMOH(String fromdateinput, String fromtimeinput, String todateinput, String totimeinput,
 			String locationstr) {
-		System.out.print("im here");
 		Map<String, String> map = new HashMap<String, String>();
 		String line = "";
 		Date todate, fromdate, fromtime, totime;
@@ -114,7 +111,7 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 				String[] info = line.split(",");
 				if (info[2] == locationstr) {
 					Date tempdate, temptime;
-					//if checkin is before the from and checkout is after the to
+					//TODO
 					tempdate = new SimpleDateFormat("dd/MM/yyyy").parse(info[4]);
 					temptime = new SimpleDateFormat("HH:mm").parse(info[5]);
 					if (tempdate.after(fromdate) && tempdate.before(todate)) {
@@ -130,13 +127,13 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//TODO
 		// retrieve data from file based on location & time of sign in&out
 		// notify users
 		// notify based on nric (not sure how)
 		// ifnot ask for nric and retrieve data based on that (will show if have been
 		// notified to stayquarintined)
 		catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -196,7 +193,9 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 						pw.append(",");
 						pw.append("Status");
 						pw.append(",");
-						pw.append("Date & Time");
+						pw.append("Date");
+						pw.append(",");
+						pw.append("Time");
 						pw.append(",");
 						pw.append("In Risk?");
 						pw.append(",");
