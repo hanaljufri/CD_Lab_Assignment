@@ -58,7 +58,6 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 			}
 		} else {
 			try {
-				File f = new File("C:\\Users\\Hana\\eclipse-workspace\\CD_Lab_Assignment\\src\\database.csv");
 				pw = new FileWriter("database.csv", true);
 				pw.append("Name");
 				pw.append(",");
@@ -183,7 +182,6 @@ public class safeEntryimpl extends java.rmi.server.UnicastRemoteObject implement
 					}
 				} else {
 					try {
-						File f = new File("C:\\Users\\Hana\\eclipse-workspace\\CD_Lab_Assignment\\src\\database.csv");
 						pw = new FileWriter("database.csv", true);
 						pw.append("Name");
 						pw.append(",");

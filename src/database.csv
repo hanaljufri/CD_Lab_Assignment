@@ -1,8 +1,2 @@
 Name,NRIC,Location,Status,Date,Time,In Risk?,
-Ben Lim,T0123456A,Bedok Mall,Check in,18/06/2021,14:44,N
-Joy Lim,T0234567B,NEX,Check in,18/06/2021,14:49,N
-Bob Lim,T0345678C,NEX,Check in,18/06/2021,14:49,N
-Chan Mei Ling,S1234567A,NEX,Check out,18/06/2021,14:56,N
-Joy Lim,T0234567B,NEX,Check out,18/06/2021,15:04,N
-Bob Lim,T0345678C,NEX,Check out,18/06/2021,15:04,N
-Ben Lim,T0123456A,Bedok Mall,Check out,18/06/2021,15:05,N
+TEST,S7878987H,Bedok Mall,Check in,18/06/2021,15:37,N
